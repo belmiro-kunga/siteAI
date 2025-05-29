@@ -133,11 +133,11 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">A IA como Pilar Estratégico</h2>
             <p class="mb-4 text-lg leading-relaxed">A Inteligência Artificial (IA) no cenário corporativo atual transcende a ficção científica, consolidando-se como uma vantagem competitiva tangível. Ela redefine operações e a criação de valor ao processar e analisar vastos volumes de dados em tempo real, identificar padrões complexos e automatizar tarefas repetitivas. Esta secção explora como a IA eleva a eficiência, precisão operacional e desvenda novas avenidas para inovação e crescimento.</p>
             
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=IA+no+Mundo+Corporativo" alt="Representação visual da Inteligência Artificial no ambiente corporativo, com gráficos e dados." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
-            <div class="card mb-6">
+            <div class="card mb-6 js-scroll-animate">
                 <h3 class="text-xl font-semibold text-emerald-600 mb-3">Benefícios Chave da IA</h3>
                 <ul class="list-disc list-inside space-y-2 text-slate-700">
                     <li>Eleva a eficiência e precisão operacional.</li>
@@ -151,11 +151,11 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6 mt-10">IA Aumentada: Amplificando a Capacidade Humana</h2>
             <p class="mb-4 text-lg leading-relaxed">A essência da IA não é substituir, mas amplificar a inteligência e capacidade humana. Ao liberar profissionais de encargos rotineiros, a IA permite que se concentrem em atividades de maior valor agregado como intuição, julgamento estratégico, criatividade e interação humana. Esta abordagem promove uma colaboração sinérgica entre humanos e máquinas.</p>
             
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Colaboração+Humano-IA" alt="Diagrama visual de um humano e um robô a colaborar, representando a IA aumentada." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
-            <div class="augmented-ai-diagram">
+            <div class="augmented-ai-diagram js-scroll-animate">
                 <div class="human-box augmented-ai-box">Humano (Estratégia, Nuance, Criatividade)</div>
                 <div class="plus-icon">+</div>
                 <div class="ai-box augmented-ai-box">IA (Dados, Automação, Padrões)</div>
@@ -163,8 +163,11 @@
                 <div class="human-box augmented-ai-box" style="background-color: #34d399; color: #064e3b;">Resultados Amplificados</div>
             </div>
             
-            <div class="card">
-                <h3 class="text-xl font-semibold text-emerald-600 mb-3">Filosofia "IA Aumentada"</h3>
+            <div class="card js-scroll-animate">
+                <h3 class="text-xl font-semibold text-emerald-600 mb-3">
+                    Filosofia "IA Aumentada"
+                    <span class="modal-trigger text-sky-500 hover:text-sky-700 text-sm font-medium cursor-pointer ml-2" data-modal-target="modal-ia-aumentada">(Saiba Mais)</span>
+                </h3>
                 <p class="text-slate-700 mb-2">A IA assume o <strong class="text-sky-600">"o quê"</strong> (gerar conteúdo, transcrever, agendar).</p>
                 <p class="text-slate-700">Os Humanos se encarregam do <strong class="text-emerald-600">"porquê"</strong> e <strong class="text-emerald-600">"como"</strong> (nuance, urgência, contexto, estratégia).</p>
                 <h4 class="text-lg font-semibold text-slate-700 mt-4 mb-2">Benefícios desta Abordagem:</h4>
@@ -177,16 +180,53 @@
             </div>
         </section>
 
-        <section id="administrativa" class="content-section">
+        <!-- Modal para IA Aumentada -->
+        <div id="modal-ia-aumentada" class="modal hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="modal-title-ia-aumentada" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="modal-overlay fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="modal-content inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title-ia-aumentada">
+                                    O que é IA Aumentada?
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-600">
+                                        A IA Aumentada, ou Inteligência Aumentada, é uma abordagem de design para a inteligência artificial que se concentra no papel assistencial da IA, enfatizando o fato de que a IA foi projetada para aprimorar a inteligência humana em vez de substituí-la.
+                                    </p>
+                                    <p class="text-sm text-gray-600 mt-2">
+                                        Ela visa criar sistemas que trabalhem em colaboração com humanos, combinando os pontos fortes da inteligência artificial (como processamento de dados em larga escala e reconhecimento de padrões) com as capacidades únicas dos humanos (como criatividade, intuição e julgamento ético). O objetivo é produzir resultados que sejam melhores do que aqueles que humanos ou máquinas poderiam alcançar sozinhos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="button" class="modal-close mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <section id="administrativa" class="content-section js-scroll-animate">
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA para Eficiência Administrativa e Assistência Executiva</h2>
             <p class="mb-8 text-lg leading-relaxed">Assistentes Executivos (EAs) frequentemente enfrentam uma sobrecarga de tarefas operacionais e repetitivas. A Inteligência Artificial surge como uma solução poderosa para otimizar o tempo destes profissionais, permitindo que se concentrem em trabalho estratégico e de maior impacto. Esta secção detalha ferramentas de IA que podem revolucionar a eficiência administrativa.</p>
 
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Assistente+Executivo+com+IA" alt="Assistente executivo a trabalhar com ferramentas de IA para otimização de tarefas." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Escrita e Comunicação</h3>
                     <p class="text-slate-600 mb-4">Aprimoram a qualidade da escrita, geram conteúdo, refinam a comunicação e adaptam o tom, garantindo profissionalismo.</p>
                     <div class="flex justify-center my-4 relative">
@@ -223,7 +263,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Transcrição e Resumo de Reuniões</h3>
                     <p class="text-slate-600 mb-4">Transcrevem reuniões em tempo real, identificam pontos-chave e geram resumos concisos com itens de ação.</p>
                     <div class="flex justify-center my-4">
@@ -257,7 +297,7 @@
                     </div>
                 </div>
                 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Gerenciamento de Calendário e Tempo</h3>
                     <p class="text-slate-600 mb-4">Analisam calendários, detectam conflitos e reorganizam agendas com base em prioridades, protegendo blocos de trabalho focado.</p>
                     <div class="flex justify-center my-4">
@@ -291,7 +331,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Construtores de Documentos e Apresentações</h3>
                     <p class="text-slate-600 mb-4">Criam documentos e apresentações visualmente atraentes, automatizando *design* e formatação.</p>
                     <div class="flex justify-center my-4">
@@ -325,7 +365,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Automação de Tarefas e Fluxos de Trabalho</h3>
                     <p class="text-slate-600 mb-4">Automatizam tarefas rotineiras e repetitivas, conectando aplicativos para compartilhar informações e acionar ações.</p>
                     <div class="flex justify-center my-4">
@@ -360,7 +400,7 @@
                 </div>
 
                 <!-- Quiz Rápido -->
-                <div class="card mt-8">
+                <div class="card mt-8 js-scroll-animate">
                     <h3 class="text-xl font-semibold text-sky-600 mb-4">Quiz Rápido: Eficiência Administrativa</h3>
                     <p class="text-slate-700 mb-3">Qual ferramenta é mais indicada para gerar automaticamente resumos de reuniões do Zoom?</p>
                     <div class="space-y-2">
@@ -377,17 +417,17 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA na Gestão Financeira e Contabilidade</h2>
             <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a remodelar o setor financeiro, oferecendo análises mais profundas, melhor gestão de riscos e uma eficiência sem precedentes. Para Diretores Financeiros (CFOs) e profissionais da área, a IA é uma ferramenta essencial para decisões informadas e estratégicas. Esta secção explora como a IA está a transformar a gestão financeira e a contabilidade.</p>
             
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Finanças+com+IA" alt="Gráficos financeiros com elementos de IA, simbolizando a gestão financeira assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Análise de Dados e Insights</h3>
                     <p class="text-slate-600 mb-4">Ferramentas de IA analisam fluxos financeiros complexos em tempo real, identificam riscos ocultos e otimizam o planeamento com inteligência preditiva.</p>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Intuit Assist (QuickBooks)</h4>
+                            <h4 class="text-lg font-semibold mb-1"><a href="https://quickbooks.intuit.com/assist/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Intuit Assist (QuickBooks)</a></h4>
                             <p class="text-sm text-slate-600 mb-2">Assistente financeiro virtual com recomendações personalizadas, monitoramento de transações e fluxo de caixa.</p>
                             <span class="details-toggle" data-target="intuit-details">Mostrar aplicabilidade ▼</span>
                             <div id="intuit-details" class="details-content text-sm text-slate-500">
@@ -395,7 +435,7 @@
                             </div>
                         </div>
                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Just Ask Xero (JAX)</h4>
+                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.xero.com/blog/2023/08/just-ask-xero-jax/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Just Ask Xero (JAX)</a></h4>
                             <p class="text-sm text-slate-600 mb-2">Automatiza tarefas contábeis, resume dados e oferece alertas em tempo real.</p>
                             <span class="details-toggle" data-target="jax-details">Mostrar aplicabilidade ▼</span>
                             <div id="jax-details" class="details-content text-sm text-slate-500">
@@ -403,7 +443,7 @@
                             </div>
                         </div>
                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Sage Copilot</h4>
+                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.sage.com/en-gb/sage-ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Sage Copilot</a></h4>
                             <p class="text-sm text-slate-600 mb-2">Analisa dados financeiros, sinaliza pagamentos atrasados e prioriza tarefas.</p>
                             <span class="details-toggle" data-target="sage-details">Mostrar aplicabilidade ▼</span>
                             <div id="sage-details" class="details-content text-sm text-slate-500">
@@ -413,25 +453,31 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Avaliação e Gerenciamento de Riscos</h3>
                     <p class="text-slate-700 mb-2">Algoritmos de IA analisam desempenho histórico, condições de mercado e indicadores econômicos para avaliação precisa do portfólio de investimentos.</p>
                     <p class="text-slate-700 font-medium">Benefícios: Aumenta a precisão, fornece alertas proativos e permite tomada de decisão mais confiante.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Gestão+de+Riscos+IA" alt="Gráfico de risco com elementos de IA, simbolizando a gestão de riscos assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
+                    <div class="flex justify-center my-4 relative">
+                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Gestão+de+Riscos+IA+(GIF)" alt="Gráfico de risco com elementos de IA, simbolizando a gestão de riscos assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-sky-600 opacity-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Automação de Processos Financeiros e Contábeis</h3>
                     <p class="text-slate-700 mb-2">Elimina processos manuais, reduzindo erros e aumentando a precisão em previsões e relatórios.</p>
                     <p class="text-slate-700 font-medium">Exemplo de Aplicabilidade: Intuit Assist automatiza a criação de faturas a partir de recibos e e-mails, e envia lembretes de pagamento inteligentes, otimizando o fluxo de caixa.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Automação+Contábil" alt="Ícones de documentos e dinheiro com setas e elementos de IA, simbolizando a automação de processos contábeis." class="w-full max-w-md h-auto rounded-lg shadow-sm">
+                    <div class="flex justify-center my-4 relative">
+                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Automação+Contábil+(GIF)" alt="Ícones de documentos e dinheiro com setas e elementos de IA, simbolizando a automação de processos contábeis." class="w-full max-w-md h-auto rounded-lg shadow-sm">
+                         <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-16 h-16 text-sky-600 opacity-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Outras Aplicações e Benefícios</h3>
                      <ul class="list-disc list-inside space-y-2 text-slate-700">
                         <li>Aconselhamento Financeiro Personalizado a custos reduzidos.</li>
@@ -441,6 +487,18 @@
                         <li><strong>Consideração:</strong> Necessidade de governança robusta para evitar vieses éticos.</li>
                     </ul>
                 </div>
+
+                <!-- Quiz Rápido -->
+                <div class="card mt-8 js-scroll-animate">
+                    <h3 class="text-xl font-semibold text-sky-600 mb-4">Quiz Rápido: Gestão Financeira</h3>
+                    <p class="text-slate-700 mb-3">Qual das seguintes ferramentas de IA é destacada por automatizar a criação de faturas e enviar lembretes de pagamento inteligentes?</p>
+                    <div class="space-y-2">
+                        <button onclick="checkQuizAnswer(this, true)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">A) Intuit Assist</button>
+                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">B) Sage Copilot</button>
+                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">C) Just Ask Xero (JAX)</button>
+                    </div>
+                    <p id="quiz-feedback-financeira" class="mt-3 text-sm font-medium"></p>
+                </div>
             </div>
         </section>
 
@@ -448,12 +506,12 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA em Recursos Humanos e Gestão de Talentos</h2>
             <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a revolucionar o departamento de Recursos Humanos (RH), otimizando o ciclo de vida do talento, desde o recrutamento e seleção até à gestão de desempenho e retenção. A IA permite que as equipas de RH operem de forma mais estratégica, eficiente e imparcial. Esta secção destaca como a IA está a transformar a gestão de talentos.</p>
 
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=RH+Inteligente" alt="Pessoas e ícones de IA, simbolizando a gestão de RH assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Recrutamento e Entrevistas</h3>
                     <p class="text-slate-600 mb-4">Automatizam *sourcing*, triagem e correspondência de candidatos; conduzem entrevistas por vídeo avaliando habilidades e identificando "bandeiras vermelhas".</p>
                     <div class="flex justify-center my-4">
@@ -503,7 +561,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Gestão e Retenção de Talentos</h3>
                     <p class="text-slate-600 mb-4">Correspondem funcionários a planos de carreira, otimizam aquisição de talentos internos/externos e reduzem rotatividade.</p>
                     <div class="flex justify-center my-4">
@@ -520,7 +578,7 @@
                     <p class="mt-3 text-slate-700 font-medium">Benefícios: Aumento do engajamento, redução de custos de rotatividade, alinhamento da força de trabalho com necessidades futuras.</p>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Suporte de RH</h3>
                     <p class="text-slate-600 mb-4">*Chatbots* de IA automatizam respostas a FAQs e consultas de funcionários sobre políticas e processos.</p>
                     <div class="flex justify-center my-4">
@@ -536,7 +594,7 @@
                     </div>
                     <p class="mt-3 text-slate-700 font-medium">Benefícios: Respostas rápidas 24/7, redução da carga de trabalho do RH, foco em questões estratégicas.</p>
                 </div>
-                 <div class="card">
+                 <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma em RH</h3>
                     <p class="text-slate-700">A IA transforma o RH de reativo para proativo, antecipando lacunas de habilidades e riscos de atrito, permitindo uma gestão de talentos mais estratégica e orientada para o futuro.</p>
                 </div>
@@ -547,12 +605,12 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA em Operações de TI e Cibersegurança</h2>
             <p class="mb-8 text-lg leading-relaxed">Num cenário de ameaças digitais em constante evolução, a Inteligência Artificial é um componente crítico para a defesa e otimização da infraestrutura de TI. A IA oferece capacidades avançadas de deteção e resposta a ameaças em tempo real, mitigando riscos e protegendo ativos digitais. Esta secção explora como a IA fortalece as operações de TI e a cibersegurança.</p>
             
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Cibersegurança+IA" alt="Cadeado digital com ícones de IA, simbolizando a cibersegurança assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Deteção de Ameaças e Anomalias</h3>
                     <p class="text-slate-600 mb-2">Ferramentas de IA identificam "*shadow data*", monitoram anormalidades em padrões de acesso e alertam sobre ameaças.</p>
                     <p class="text-slate-700 mb-2 font-medium">Benefícios: Economiza tempo na deteção e remediação, mitiga riscos de violação de dados, fortalece a postura de segurança.</p>
@@ -562,13 +620,13 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Remediação em Tempo Real</h3>
                     <p class="text-slate-600 mb-2">Auxilia na remediação de problemas, fornecendo informações acionáveis e, em alguns casos, automatizando respostas (ex: isolar dispositivo comprometido).</p>
                     <p class="text-slate-700 font-medium">Benefícios: Reduz significativamente o tempo de resposta a incidentes (MTTR), minimiza o impacto de ataques cibernéticos.</p>
                 </div>
                 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma em Cibersegurança</h3>
                     <p class="text-slate-700">A IA transforma a cibersegurança de reativa para preditiva e proativa, permitindo uma defesa mais robusta contra ameaças emergentes através da "segurança baseada em comportamento".</p>
                 </div>
@@ -579,12 +637,12 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA na Indústria da Construção</h2>
             <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a revolucionar a indústria da construção, impactando desde o planeamento e *design* até à segurança no local, gestão da cadeia de suprimentos e manutenção. A IA melhora resultados, economiza custos e otimiza processos. Esta secção detalha as aplicações transformadoras da IA na construção civil.</p>
 
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Construção+Inteligente" alt="Canteiro de obras com elementos de IA, simbolizando a construção civil assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Planeamento e Design</h3>
                     <p class="text-slate-600 mb-4">Acelera e torna mais preciso o planeamento, avaliando múltiplos cenários de cronograma, recursos e custos. Software BIM com IA entrega modelos 3D mais precisos.</p>
                     <div class="flex justify-center my-4">
@@ -600,7 +658,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Segurança e Monitoramento de Canteiros de Obras</h3>
                     <p class="text-slate-600 mb-4">Câmeras e *drones* com IA monitoram em tempo real, detectando violações de segurança (ex: falta de EPI), perigos e pessoal não autorizado.</p>
                     <div class="flex justify-center my-4">
@@ -626,7 +684,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Manutenção Preditiva</h3>
                     <p class="text-slate-600 mb-2">Constrói cronogramas de manutenção preditiva para equipamentos, analisando dados de sensores para prever falhas.</p>
                     <div class="flex justify-center my-4">
@@ -638,7 +696,7 @@
                     </div>
                 </div>
                 
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Gestão da Cadeia de Suprimentos</h3>
                     <p class="text-slate-600 mb-2">Analisam dados históricos e em tempo real para prever demanda por materiais, otimizando aquisição e entrega.</p>
                     <div class="flex justify-center my-4">
@@ -650,14 +708,14 @@
                     </div>
                 </div>
 
-                 <div class="card">
+                 <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Outras Aplicações Relevantes</h3>
                      <ul class="list-disc list-inside space-y-2 text-slate-700">
                         <li><strong>Controle de Qualidade:</strong> Robôs e *drones* com IA inspecionam e identificam defeitos.</li>
                         <li><strong>Automação de *Back Office*:</strong > Software de automação de contas a pagar com IA melhora eficiência no processamento de faturas.</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma na Construção</h3>
                     <p class="text-slate-700">Transição de gerenciamento de projetos reativo para preditivo, otimizado por dados e com maior controle, levando a projetos mais eficientes, seguros e rentáveis.</p>
                 </div>
@@ -668,12 +726,12 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">Automação e Integração de Fluxos de Trabalho com IA</h2>
             <p class="mb-8 text-lg leading-relaxed">A capacidade da Inteligência Artificial de integrar-se e automatizar tarefas entre diferentes plataformas é crucial para a eficiência operacional. Plataformas de automação atuam como pontes digitais, conectando aplicativos e serviços para orquestrar fluxos de trabalho complexos, quebrando silos de dados e aumentando a produtividade. Esta secção foca em como a IA capacita esta integração.</p>
 
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Integração+de+Fluxos+IA" alt="Ícones de diferentes aplicativos conectados por setas, simbolizando a integração de fluxos de trabalho com IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="space-y-8">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-4">Plataformas de Integração e Automação</h3>
                     <p class="text-slate-600 mb-4">Conectam aplicativos e serviços díspares para automatizar fluxos de trabalho complexos e multifuncionais, melhorando a precisão dos dados e a produtividade.</p>
                     <div class="grid md:grid-cols-2 gap-6">
@@ -696,7 +754,7 @@
                     </div>
                      <p class="mt-4 text-slate-700 font-medium">Benefícios: Quebra silos de dados, aumenta drasticamente a produtividade, melhora a precisão dos dados.</p>
                 </div>
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Sinergia Operacional</h3>
                     <p class="text-slate-700">A IA não apenas otimiza tarefas individuais, mas cria um ecossistema interconectado onde os dados fluem livremente e as ações são acionadas de forma inteligente, resultando numa organização mais coesa e responsiva.</p>
                 </div>
@@ -707,12 +765,12 @@
             <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">Conclusão: Abrace a Transformação da IA</h2>
             <p class="mb-6 text-lg leading-relaxed">A Inteligência Artificial está a estabelecer-se como uma força motriz essencial para a otimização e inovação em múltiplos domínios empresariais. A sua capacidade de amplificar as capacidades humanas, automatizar processos e integrar fluxos de trabalho é fundamental para o sucesso na era digital. Esta secção resume os principais pontos e o caminho a seguir.</p>
             
-            <div class="flex justify-center my-6">
+            <div class="flex justify-center my-6 js-scroll-animate">
                 <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Futuro+com+IA" alt="Pessoas e robôs a trabalhar juntos num ambiente futurista, simbolizando o futuro com IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">Principais Pilares da Transformação com IA</h3>
                     <ul class="list-disc list-inside space-y-2 text-slate-700">
                         <li><strong>IA como Força Essencial:</strong> Otimização e inovação em múltiplos domínios empresariais.</li>
@@ -720,7 +778,7 @@
                         <li><strong>Integração e Automação:</strong> Fundamental para quebrar silos e criar sinergia operacional.</li>
                     </ul>
                 </div>
-                <div class="card">
+                <div class="card js-scroll-animate">
                     <h3 class="text-xl font-semibold text-emerald-600 mb-3">O Caminho a Seguir</h3>
                     <ul class="list-disc list-inside space-y-2 text-slate-700">
                         <li>Exploração contínua de novas ferramentas e aplicações de IA.</li>
@@ -730,7 +788,7 @@
                 </div>
             </div>
 
-            <div class="card mt-8 bg-sky-600 text-white">
+            <div class="card mt-8 bg-sky-600 text-white js-scroll-animate">
                 <h3 class="text-xl font-semibold mb-3">Benefício Final</h3>
                 <p class="leading-relaxed">A adoção estratégica da IA não apenas otimiza operações, mas desbloqueia novas oportunidades de crescimento, competitividade e liderança de mercado, preparando as organizações para os desafios e oportunidades do futuro.</p>
             </div>
@@ -746,6 +804,7 @@
             const tabs = document.querySelectorAll('.tab-button');
             const sections = document.querySelectorAll('.content-section');
             const detailToggles = document.querySelectorAll('.details-toggle');
+            const body = document.body;
 
             // Função para navegação por abas
             tabs.forEach(tab => {
@@ -806,9 +865,13 @@
                     feedbackEl.className = 'mt-3 text-sm font-medium text-red-600';
                     // Destacar a correta
                     quizOptions.forEach(opt => {
-                        if (opt.textContent.includes('Fathom')) { // Marcar a opção correta específica para este quiz
-                             opt.classList.remove('bg-slate-50', 'text-slate-500');
-                             opt.classList.add('bg-green-200', 'text-green-800', 'border-2', 'border-green-500');
+                        // Ajuste para destacar a opção correta dinamicamente ou adicione uma lógica específica por quiz
+                        // Exemplo genérico (precisa ser adaptado se as opções corretas não forem sempre a primeira com "true")
+                        if (button.parentElement.querySelector('button[onclick*="checkQuizAnswer(this, true)"]') === opt) {
+                           if (!isCorrect) { // Só destacar se a errada foi clicada
+                                opt.classList.remove('bg-slate-50', 'text-slate-500');
+                                opt.classList.add('bg-green-200', 'text-green-800', 'border-2', 'border-green-500');
+                           }
                         }
                     });
                 }
@@ -816,6 +879,61 @@
             
             // Atualiza o ano no rodapé
             document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Animações de Scroll com Intersection Observer
+            const animatedElements = document.querySelectorAll('.js-scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-5');
+                        observer.unobserve(entry.target); // Anima apenas uma vez
+                    }
+                });
+            }, { threshold: 0.1 }); // Dispara quando 10% do elemento está visível
+
+            animatedElements.forEach(el => {
+                el.classList.add('opacity-0', 'translate-y-5', 'transition-all', 'duration-700', 'ease-out');
+                observer.observe(el);
+            });
+
+            // Lógica para Modais
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            const modals = document.querySelectorAll('.modal'); // Seleciona todos os modais pela classe .modal
+            const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const modalId = trigger.dataset.modalTarget;
+                    const modalToOpen = document.getElementById(modalId);
+                    if (modalToOpen) {
+                        modalToOpen.classList.remove('hidden');
+                        body.classList.add('overflow-hidden'); // Impede scroll do fundo
+                    }
+                });
+            });
+
+            modalCloseButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalToClose = button.closest('.modal');
+                    if (modalToClose) {
+                        modalToClose.classList.add('hidden');
+                        body.classList.remove('overflow-hidden');
+                    }
+                });
+            });
+
+            // Fechar modal clicando no overlay
+            modals.forEach(modal => {
+                modal.addEventListener('click', (event) => {
+                    // Verifica se o clique foi no próprio modal (overlay) e não em seus filhos (modal-content)
+                    if (event.target === modal) { 
+                        modal.classList.add('hidden');
+                        body.classList.remove('overflow-hidden');
+                    }
+                });
+            });
         });
     </script>
 
