@@ -1,941 +1,511 @@
-<html lang="pt">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA no Mundo Corporativo: Aplicações Práticas</title>
+    <title>Apresentação: Microsoft 365 Copilot</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Visualization & Content Choices:
-        - Report Info: IA como Pilar Estratégico (Slide 2) -> Goal: Inform -> Presentation: Text block, Image -> Interaction: Static -> Justification: Foundational concept, visual appeal.
-        - Report Info: IA Aumentada (Slide 3) -> Goal: Explain concept -> Presentation: Text block, HTML/CSS diagram, Image -> Interaction: Static/Hover for diagram -> Justification: Core philosophy, visual reinforcement.
-        - Report Info: AI for Admin - Ferramentas de Escrita (Slide 4) -> Goal: List tools & show use -> Presentation: Cards for each tool with description and applicability example, Image -> Interaction: Click to expand/reveal example -> Justification: Easy comparison and detailed view on demand, visual context.
-        - Report Info: AI for Admin - Transcrição (Slide 5) -> Goal: List tools & show use -> Presentation: Cards for tools, Image -> Interaction: Click to expand example -> Justification: Clear presentation of options, visual context.
-        - Report Info: AI for Admin - Calendário (Slide 5) -> Goal: List tools & show use -> Presentation: Cards for tools, Image -> Interaction: Click to expand example -> Justification: User-friendly, visual context.
-        - Report Info: AI for Admin - Documentos (Slide 6) -> Goal: List tools & show use -> Presentation: Cards for tools, Image -> Interaction: Click to expand example -> Justification: Showcasing creation tools, visual context.
-        - Report Info: AI for Admin - Automação (Slide 6) -> Goal: List tools & show use -> Presentation: Cards for tools, Image -> Interaction: Click to expand example -> Justification: Explaining workflow automation, visual context.
-        - Report Info: IA na Gestão Financeira (Slides 7-8) -> Goal: Detail AI impact, tools -> Presentation: Text sections for Análise, Risco, Automação; Cards for tools, Image -> Interaction: Click to expand examples -> Justification: Comprehensive overview, visual context.
-        - Report Info: AI em RH (Slides 9-10) -> Goal: Detail AI impact, tools -> Presentation: Text sections for Recrutamento, Gestão de Talentos, Suporte; Cards for tools, Image -> Interaction: Click to expand examples -> Justification: Covers HR functions, visual context.
-        - Report Info: AI em TI (Slide 11) -> Goal: Detail AI impact, tools -> Presentation: Text sections for Deteção, Remediação, Image -> Interaction: Static content -> Justification: Security focus, visual context.
-        - Report Info: AI na Construção (Slides 12-14) -> Goal: Detail AI impact, tools -> Presentation: Text sections for Planejamento, Segurança, Manutenção, Supply Chain; Cards for tools, Images -> Interaction: Click to expand examples -> Justification: Industry-specific applications, strong visual context.
-        - Report Info: Automação e Integração (Slide 15) -> Goal: Highlight Zapier/Make -> Presentation: Text section with tool cards, Image -> Interaction: Click to expand examples -> Justification: Cross-functional automation, visual context.
-        - Report Info: Conclusão (Slide 16) -> Goal: Summarize -> Presentation: Text block, Image -> Interaction: Static -> Justification: Concluding remarks, visual reinforcement.
-        CONFIRMATION: NO SVG/Mermaid. All diagrams (if any) will be HTML/CSS. No Chart.js needed as source has no quantitative chart data.
-    -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* bg-slate-50 (um pouco mais claro que slate-100) */
-            color: #1e293b; /* text-slate-800 */
+            background-color: #f0f4f8; /* Fundo suave */
+            color: #1e293b; /* Cor de texto principal */
         }
-        .tab-button {
-            transition: all 0.3s ease-in-out;
-        }
-        .tab-button.active {
-            background-color: #0284c7; /* bg-sky-600 */
-            color: white;
-            border-bottom-width: 4px;
-            border-bottom-color: #0369a1; /* border-sky-700 */
-        }
-        .tab-button:not(.active):hover {
-            background-color: #e0f2fe; /* bg-sky-100 */
-            color: #0c4a6e; /* text-sky-800 */
-        }
-        .content-section {
+        .slide {
             display: none;
+            min-height: 80vh; /* Altura mínima para preencher a tela */
+            padding: 2rem;
+            border-radius: 12px; /* Bordas arredondadas */
+            background-color: white;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Sombra suave */
+            overflow-y: auto; /* Scroll se o conteúdo for maior */
         }
-        .content-section.active {
+        .slide.active {
             display: block;
         }
-        .card {
-            background-color: white;
-            border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-lg */
-            padding: 1.5rem; /* p-6 */
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6); /* Fundo escurecido */
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); /* shadow-xl */
-        }
-        .tool-card h4 {
-            color: #0ea5e9; /* text-sky-500 */
-        }
-        .details-toggle {
-            cursor: pointer;
-            color: #0ea5e9; /* text-sky-500 */
-            font-weight: 500; /* medium */
-        }
-        .details-content {
-            display: none;
-            margin-top: 0.5rem; /* mt-2 */
-            padding-left: 1rem; /* pl-4 */
-            border-left: 2px solid #bae6fd; /* border-sky-200 */
-        }
-         /* Estilo para o diagrama de IA Aumentada */
-        .augmented-ai-diagram {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem; /* gap-4 */
-            padding: 1rem; /* p-4 */
-            background-color: #e0f2fe; /* bg-sky-100 */
-            border-radius: 0.5rem; /* rounded-lg */
-            margin-top: 1rem; /* mt-4 */
-            margin-bottom: 1rem; /* mb-4 */
-        }
-        .augmented-ai-box {
-            padding: 0.75rem 1.25rem; /* py-3 px-5 */
-            border-radius: 0.375rem; /* rounded-md */
+        .modal-content {
+            background-color: #ffffff;
+            margin: 10% auto;
+            padding: 25px;
+            border: 1px solid #d1d5db;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
             text-align: center;
-            font-weight: 600; /* semibold */
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
         }
-        .ai-box {
-            background-color: #7dd3fc; /* bg-sky-300 */
-            color: #0c4a6e; /* text-sky-800 */
+        .modal-close-button {
+            background-color: #3b82f6; /* Azul */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
         }
-        .human-box {
-            background-color: #6ee7b7; /* bg-emerald-300 */
-            color: #065f46; /* text-emerald-800 */
+        .modal-close-button:hover {
+            background-color: #2563eb; /* Azul mais escuro */
         }
-        .plus-icon {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* bold */
-            color: #374151; /* text-gray-700 */
+        .nav-button {
+            background-color: #10b981; /* Verde esmeralda */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+        .nav-button:hover {
+            background-color: #059669; /* Verde mais escuro */
+            transform: translateY(-2px);
+        }
+        .nav-button:disabled {
+            background-color: #9ca3af; /* Cinza para desabilitado */
+            cursor: not-allowed;
+            transform: translateY(0);
+        }
+        .prompt-example {
+            background-color: #f3f4f6; /* Fundo cinza claro para prompts */
+            border-left: 4px solid #3b82f6; /* Borda azul */
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-style: italic;
+            color: #374151; /* Cor de texto para prompts */
+        }
+        .slide-title {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            color: #2563eb; /* Azul vibrante para títulos */
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #dbeafe; /* Linha sutil abaixo do título */
+            padding-bottom: 0.75rem;
+        }
+        .slide-subtitle {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            color: #4b5563; /* Cinza escuro para subtítulos */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #3b82f6; /* Azul */
+            border-radius: 9999px;
+            transition: width 0.3s ease-in-out;
+        }
+         /* Estilo para logos */
+        .logo-container img {
+            max-height: 50px; /* Ajuste conforme necessário */
+            margin: 0 10px;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="container mx-auto p-4 md:p-8">
 
-    <header class="bg-slate-800 text-white shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <h1 class="text-3xl sm:text-4xl font-bold text-center">O Impacto Transformador da Inteligência Artificial</h1>
-            <p class="text-center text-slate-300 mt-2 text-lg">Potencializando o Sucesso Corporativo: Detalhes e Aplicações Práticas</p>
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-bold mb-4 text-blue-600">Bem-vindo(a) à Apresentação!</h2>
+            <p class="mb-2 text-lg"><strong>Apresentador:</strong> Belmiro Manuel Kunga</p>
+            <p class="mb-2 text-lg"><strong>Função:</strong> Técnico de TI</p>
+            <p class="mb-4 text-lg"><strong>Empresa:</strong> Ever-IT, Grupo Opaia SA</p>
+            <button id="closeModalButton" class="modal-close-button">Iniciar Apresentação</button>
         </div>
-    </header>
+    </div>
 
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-2 sm:px-4 lg:px-6">
-            <div class="flex flex-wrap justify-center -mb-px">
-                <button data-tab="introducao" class="tab-button active text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Introdução</button>
-                <button data-tab="administrativa" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Eficiência Administrativa</button>
-                <button data-tab="financeira" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Gestão Financeira</button>
-                <button data-tab="rh" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Recursos Humanos</button>
-                <button data-tab="ti" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">TI e Cibersegurança</button>
-                <button data-tab="construcao" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Construção Civil</button>
-                <button data-tab="automacao" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Automação de Fluxos</button>
-                <button data-tab="conclusao" class="tab-button text-sm sm:text-base font-medium py-3 px-3 sm:px-5 border-b-2 border-transparent rounded-t-lg">Conclusão</button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
-        <section id="introducao" class="content-section active">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">A IA como Pilar Estratégico</h2>
-            <p class="mb-4 text-lg leading-relaxed">A Inteligência Artificial (IA) no cenário corporativo atual transcende a ficção científica, consolidando-se como uma vantagem competitiva tangível. Ela redefine operações e a criação de valor ao processar e analisar vastos volumes de dados em tempo real, identificar padrões complexos e automatizar tarefas repetitivas. Esta secção explora como a IA eleva a eficiência, precisão operacional e desvenda novas avenidas para inovação e crescimento.</p>
-            
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=IA+no+Mundo+Corporativo" alt="Representação visual da Inteligência Artificial no ambiente corporativo, com gráficos e dados." class="w-full max-w-xl h-auto rounded-lg shadow-md">
+    <div id="presentationContainer" class="opacity-0 transition-opacity duration-500">
+        <div id="slidesContainer" class="mb-8">
+            <div class="slide" data-title="Título">
+                <div class="flex flex-col items-center justify-center h-full text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold text-blue-700 mb-4">Microsoft 365 Copilot: Revolucionando a Sua Produtividade</h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-2">Apresentado por: <strong>Belmiro Manuel Kunga</strong>, Técnico de IT</p>
+                    <p class="text-lg md:text-xl text-gray-600">Em nome de: <strong>Ever IT, Grupo Opaia SA</strong></p>
+                    <div class="logo-container flex justify-center items-center mt-6">
+                        <p class="text-sm text-gray-500 mt-2">(Espaço para Logos: Ever IT, Grupo Opaia SA, M365 Copilot)</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="card mb-6 js-scroll-animate">
-                <h3 class="text-xl font-semibold text-emerald-600 mb-3">Benefícios Chave da IA</h3>
-                <ul class="list-disc list-inside space-y-2 text-slate-700">
-                    <li>Eleva a eficiência e precisão operacional.</li>
-                    <li>Desvenda novas avenidas para inovação e crescimento.</li>
-                    <li>Permite tomadas de decisão mais informadas e ágeis.</li>
-                    <li>Melhora a personalização de produtos e serviços.</li>
-                    <li>Otimiza a alocação de recursos.</li>
+            <div class="slide" data-title="Introdução">
+                <h2 class="slide-title">Introdução - O que é o Microsoft 365 Copilot?</h2>
+                <p class="text-lg mb-4">Apresentando o Microsoft 365 Copilot:</p>
+                <ul>
+                    <li>Uma inteligência artificial (IA) projetada para ser seu assistente no ambiente de trabalho.</li>
+                    <li>Integrado aos aplicativos do Microsoft 365 que você já utiliza diariamente (Word, Excel, PowerPoint, Outlook, Teams, OneNote, etc.).</li>
+                    <li>Objetivo: Transformar a forma como lidamos com informações, aumentamos a produtividade e executamos tarefas.</li>
+                </ul>
+                <div class="flex justify-center mt-6">
+                    <img src="https://placehold.co/400x250/e0e7ff/3b82f6?text=IA+no+Trabalho" alt="Imagem de IA no Trabalho" class="rounded-lg shadow-md">
+                </div>
+            </div>
+
+            <div class="slide" data-title="Como Funciona">
+                <h2 class="slide-title">Como Funciona? - Os Recursos Tecnológicos Essenciais</h2>
+                <p class="text-lg mb-4">A Base do Copilot: Inteligência Artificial Avançada e Seus Dados</p>
+                <ul>
+                    <li><strong>Inteligência Artificial (IA) Generativa:</strong> No núcleo, o Copilot utiliza modelos de linguagem abrangentes (LLMs), como o <strong>GPT-4</strong>, para compreender, resumir, criar e prever conteúdo em resposta aos seus comandos (prompts).</li>
+                    <li><strong>Microsoft Graph:</strong> Este é um recurso crucial. O Copilot combina o poder dos LLMs com os <strong>seus dados empresariais no Microsoft Graph</strong> – e-mails, calendário, chats, documentos, reuniões – para fornecer respostas personalizadas, relevantes e contextuais.</li>
+                    <li><strong>Integração Profunda com Apps Microsoft 365:</strong> O Copilot não é uma aplicação separada; ele está <strong>integrado diretamente</strong> nas aplicações do Microsoft 365 que você usa todos os dias, herdando as políticas de segurança e conformidade já existentes.</li>
+                    <li><strong>Segurança e Privacidade como Prioridade:</strong>
+                        <ul class="ml-6 mt-2">
+                            <li>Os seus dados permanecem seguros dentro do seu tenant do Microsoft 365.</li>
+                            <li>O Copilot respeita as permissões individuais e as políticas de dados da sua organização.</li>
+                            <li>Os prompts e as respostas não são usados para treinar os modelos LLM fundamentais para outros clientes.</li>
+                        </ul>
+                    </li>
+                </ul>
+                 <p class="mt-4 text-sm text-gray-600 text-center"><em>Diagrama Ilustrativo: [Ícone GPT-4/LLM] + [Ícone Microsoft Graph/Seus Dados] + [Ícones Apps M365]  -> Resultam em -> [Ícone Copilot com Escudo de Segurança] -> Resposta Inteligente e Segura</em></p>
+            </div>
+
+            <div class="slide" data-title="Capacidades Gerais">
+                <h2 class="slide-title">Capacidades Gerais - O Poder do Copilot ao Seu Alcance</h2>
+                <p class="text-lg mb-4">Desbloqueando um Novo Nível de Eficiência em Todo o M365:</p>
+                <p class="mb-4">O Microsoft 365 Copilot ajuda você a:</p>
+                <ul>
+                    <li><strong>Criar com Facilidade:</strong> Gere rascunhos, ideias e conteúdo original.</li>
+                    <li><strong>Compreender e Analisar:</strong> Extraia insights chave de dados e documentos complexos.</li>
+                    <li><strong>Resumir e Organizar:</strong> Condense informações extensas em sumários práticos.</li>
+                    <li><strong>Automatizar e Agilizar:</strong> Simplifique tarefas repetitivas e acelere fluxos de trabalho.</li>
+                    <li><strong>Colaborar de Forma Inteligente:</strong> Melhore a comunicação e a eficiência em equipa.</li>
+                </ul>
+                <p class="mt-4 text-sm text-gray-600"><em>No próximo slide, veremos exemplos específicos de como estas capacidades se traduzem em ações concretas nas suas aplicações favoritas.</em></p>
+            </div>
+
+            <div class="slide" data-title="Casos de Uso">
+                <h2 class="slide-title">Casos de Uso Detalhados por Aplicativo (Com Exemplos de Prompts)</h2>
+                <p class="text-lg mb-6">Transformando sua Experiência no Microsoft 365 – Exemplos Práticos:</p>
+
+                <div>
+                    <h3 class="slide-subtitle">Word</h3>
+                    <ul>
+                        <li><strong>Criação e Edição:</strong>
+                            <p class="prompt-example">"Cria um rascunho de uma proposta de projeto com base no documento [Nome do Documento] e no email de [Remetente]."</p>
+                            <p class="prompt-example">"Reescreve este parágrafo para ser mais conciso e profissional."</p>
+                        </li>
+                        <li><strong>Sumarização:</strong>
+                            <p class="prompt-example">"Resume este documento de 10 páginas nos 5 pontos principais."</p>
+                        </li>
+                        <li><strong>Interação:</strong>
+                            <p class="prompt-example">(no chat com Copilot sobre o documento aberto): "Quais são os principais riscos mencionados neste relatório?"</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="slide-subtitle">Excel</h3>
+                     <ul>
+                        <li><strong>Criação de Planilhas Complexas:</strong>
+                            <p class="prompt-example">"Cria uma planilha para rastrear o orçamento do projeto X, incluindo colunas para Tarefa, Responsável, Data de Início, Data de Conclusão, Custo Estimado, Custo Real e Status. Adiciona formatação condicional para destacar tarefas atrasadas em vermelho e concluídas em verde. Inclui uma coluna para calcular a variação de custo."</p>
+                        </li>
+                        <li><strong>Extração e Análise de Informações:</strong>
+                            <p class="prompt-example">(após a criação da planilha): "Quais tarefas estão atualmente atrasadas e qual é o impacto no custo total estimado?"</p>
+                            <p class="prompt-example">"Gera um gráfico de Gantt com base nas datas de início e conclusão das tarefas."</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="slide-subtitle">PowerPoint</h3>
+                     <ul>
+                        <li><strong>Criação:</strong>
+                            <p class="prompt-example">"Cria uma apresentação de 5 slides sobre os benefícios da inteligência artificial para pequenas empresas, usando o documento [Nome do Documento Word] como base."</p>
+                        </li>
+                        <li><strong>Formatação e Conteúdo:</strong>
+                             <p class="prompt-example">"Aplica a identidade visual da empresa [Ever IT] a esta apresentação."</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="slide-subtitle">Outlook</h3>
+                     <ul>
+                        <li><strong>Comunicação:</strong>
+                            <p class="prompt-example">"Redige um email para [Destinatário] a agradecer pela reunião de hoje e a resumir os próximos passos que discutimos, em nome de Belmiro Kunga da Ever IT."</p>
+                        </li>
+                        <li><strong>Gestão de E-mails:</strong>
+                             <p class="prompt-example">"Resume esta longa thread de emails sobre o projeto X."</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="mt-6">
+                    <h3 class="slide-subtitle">Teams</h3>
+                     <ul>
+                        <li><strong>Reuniões e Chats:</strong>
+                            <p class="prompt-example">(durante uma reunião): "Resume o que perdi nos últimos 10 minutos."</p>
+                        </li>
+                        <li><strong>Análise e Decisão:</strong>
+                             <p class="prompt-example">"Quais são os prós e contras da proposta discutida neste canal?"</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="slide-subtitle">OneNote</h3>
+                     <ul>
+                        <li><strong>Organização:</strong>
+                            <p class="prompt-example">"Resume as minhas anotações da reunião de marketing de ontem."</p>
+                        </li>
+                        <li><strong>Criação e Interação:</strong>
+                             <p class="prompt-example">(no chat com Copilot sobre as notas): "Ajuda-me a reescrever esta secção para ser mais clara."</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slide" data-title="Benefícios">
+                <h2 class="slide-title">Principais Benefícios do Microsoft 365 Copilot</h2>
+                <p class="text-lg mb-4">Impacto Direto no Seu Dia a Dia e nos Resultados:</p>
+                <ul>
+                    <li><strong>Aumentar Produtividade:</strong> Realize mais em menos tempo, automatizando tarefas e otimizando fluxos de trabalho.</li>
+                    <li><strong>Economizar Tempo:</strong> Reduza o tempo gasto em tarefas manuais e repetitivas.</li>
+                    <li><strong>Melhorar Qualidade do Trabalho:</strong> Crie documentos, análises e apresentações mais refinados e precisos com assistência inteligente.</li>
+                    <li><strong>Aumentar Criatividade:</strong> Supere bloqueios criativos, gere novas ideias e explore diferentes abordagens.</li>
+                    <li><strong>Melhorar Foco:</strong> Concentre-se em tarefas de maior valor, delegando o trabalho preparatório e de rotina ao Copilot.</li>
+                    <li><strong>Reduzir Carga Cognitiva:</strong> Diminua o esforço mental para processar grandes volumes de informação e tomar decisões.</li>
+                    <li><strong>Simplificar Tarefas Diárias:</strong> Torne as atividades quotidianas mais fáceis e intuitivas.</li>
+                    <li><strong>Simplificar Processos de Negócios:</strong> Otimize e agilize processos complexos em toda a organização.</li>
+                    <li><strong>Otimizar ROI (Retorno sobre o Investimento):</strong> Maximize o valor das suas ferramentas Microsoft 365 e do tempo da sua equipa.</li>
                 </ul>
             </div>
 
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6 mt-10">IA Aumentada: Amplificando a Capacidade Humana</h2>
-            <p class="mb-4 text-lg leading-relaxed">A essência da IA não é substituir, mas amplificar a inteligência e capacidade humana. Ao liberar profissionais de encargos rotineiros, a IA permite que se concentrem em atividades de maior valor agregado como intuição, julgamento estratégico, criatividade e interação humana. Esta abordagem promove uma colaboração sinérgica entre humanos e máquinas.</p>
-            
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Colaboração+Humano-IA" alt="Diagrama visual de um humano e um robô a colaborar, representando a IA aumentada." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="augmented-ai-diagram js-scroll-animate">
-                <div class="human-box augmented-ai-box">Humano (Estratégia, Nuance, Criatividade)</div>
-                <div class="plus-icon">+</div>
-                <div class="ai-box augmented-ai-box">IA (Dados, Automação, Padrões)</div>
-                <div class="plus-icon">=</div>
-                <div class="human-box augmented-ai-box" style="background-color: #34d399; color: #064e3b;">Resultados Amplificados</div>
-            </div>
-            
-            <div class="card js-scroll-animate">
-                <h3 class="text-xl font-semibold text-emerald-600 mb-3">
-                    Filosofia "IA Aumentada"
-                    <span class="modal-trigger text-sky-500 hover:text-sky-700 text-sm font-medium cursor-pointer ml-2" data-modal-target="modal-ia-aumentada">(Saiba Mais)</span>
-                </h3>
-                <p class="text-slate-700 mb-2">A IA assume o <strong class="text-sky-600">"o quê"</strong> (gerar conteúdo, transcrever, agendar).</p>
-                <p class="text-slate-700">Os Humanos se encarregam do <strong class="text-emerald-600">"porquê"</strong> e <strong class="text-emerald-600">"como"</strong> (nuance, urgência, contexto, estratégia).</p>
-                <h4 class="text-lg font-semibold text-slate-700 mt-4 mb-2">Benefícios desta Abordagem:</h4>
-                <ul class="list-disc list-inside space-y-2 text-slate-700">
-                    <li>Mitiga resistência à automação.</li>
-                    <li>Acelera integração e aceitação entre funcionários.</li>
-                    <li>Maximiza o retorno sobre o investimento (ROI).</li>
-                    <li>Cria uma cultura organizacional mais adaptável e inovadora.</li>
+            <div class="slide" data-title="Como Usar">
+                <h2 class="slide-title">Como Usar o Copilot - Maximizando o Seu Potencial</h2>
+                <p class="text-lg mb-4">Interagindo com a IA e Desenvolvendo Suas Habilidades:</p>
+                <ul>
+                    <li><strong>Prompts (Comandos em Linguagem Natural):</strong> A base da interação. Dê instruções claras, específicas e contextuais ao Copilot. Quanto melhor o prompt, melhor a resposta.
+                        <p class="prompt-example">"Cria um resumo de duas frases deste documento e sugere três perguntas que um cliente poderia fazer."</p>
+                    </li>
+                    <li><strong>Interface Integrada:</strong> Aceda ao Copilot através da barra lateral ou janela de chat dentro das aplicações M365.</li>
+                    <li><strong>Iteração e Refinamento:</strong> Reveja as sugestões, peça modificações ou forneça mais contexto para refinar os resultados.</li>
+                    <li><strong>Copilot Lab:</strong> Um recurso para aprender e experimentar com prompts. Descubra as melhores práticas e inspire-se com exemplos.</li>
+                    <li><strong>Painel do Copilot (Dashboard - para administradores/organizações):</strong> Permite medir o impacto e a adoção do Copilot na organização.</li>
                 </ul>
             </div>
-        </section>
 
-        <!-- Modal para IA Aumentada -->
-        <div id="modal-ia-aumentada" class="modal hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="modal-title-ia-aumentada" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="modal-overlay fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="modal-content inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                        <div class="sm:flex sm:items-start">
-                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <svg class="h-6 w-6 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title-ia-aumentada">
-                                    O que é IA Aumentada?
-                                </h3>
-                                <div class="mt-2">
-                                    <p class="text-sm text-gray-600">
-                                        A IA Aumentada, ou Inteligência Aumentada, é uma abordagem de design para a inteligência artificial que se concentra no papel assistencial da IA, enfatizando o fato de que a IA foi projetada para aprimorar a inteligência humana em vez de substituí-la.
-                                    </p>
-                                    <p class="text-sm text-gray-600 mt-2">
-                                        Ela visa criar sistemas que trabalhem em colaboração com humanos, combinando os pontos fortes da inteligência artificial (como processamento de dados em larga escala e reconhecimento de padrões) com as capacidades únicas dos humanos (como criatividade, intuição e julgamento ético). O objetivo é produzir resultados que sejam melhores do que aqueles que humanos ou máquinas poderiam alcançar sozinhos.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="slide" data-title="Disponibilidade">
+                <h2 class="slide-title">Disponibilidade e Requisitos</h2>
+                <p class="text-lg mb-4">Acedendo ao Microsoft 365 Copilot:</p>
+                <ul>
+                    <li><strong>Licenciamento:</strong> Geralmente requer uma subscrição específica do Microsoft 365 para empresas (ex: Microsoft 365 E3/E5, Business Standard/Premium) mais um add-on do Copilot.</li>
+                    <li><strong>Requisitos Técnicos:</strong>
+                        <ul class="ml-6 mt-2">
+                            <li>Utilização de aplicações Microsoft 365 baseadas na nuvem.</li>
+                            <li>Configurações adequadas de identidade e acesso (Azure AD).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Implementação:</strong> Informações sobre como a sua organização pode adquirir e implementar o Copilot. (A Ever IT pode auxiliar neste processo!)</li>
+                    <li><strong>Recursos Necessários (do utilizador):</strong> Vontade de aprender e adaptar-se a novas formas de trabalhar, experimentando com prompts.</li>
+                </ul>
+            </div>
+
+            <div class="slide" data-title="Extensibilidade">
+                <h2 class="slide-title">Extensibilidade e o Futuro do Copilot</h2>
+                 <p class="text-lg mb-4">Expandindo as Capacidades do Copilot:</p>
+                <ul>
+                    <li><strong>Microsoft Copilot Studio:</strong> Permite personalizar o Copilot e construir copilotos personalizados para necessidades específicas da empresa, conectando a outras fontes de dados e sistemas (RH, CRM, etc.).</li>
+                    <li><strong>Integrações de Terceiros:</strong> Ecossistema crescente de plugins e conectores.</li>
+                    <li><strong>Evolução Contínua:</strong> A Microsoft está constantemente a atualizar e a adicionar novas funcionalidades ao Copilot.</li>
+                    <li><strong>Visão de Futuro:</strong> IA cada vez mais integrada e proativa, transformando todas as facetas do trabalho.</li>
+                </ul>
+            </div>
+
+            <div class="slide" data-title="Visão Geral">
+                <h2 class="slide-title">Visão Geral - A Revolução da Produtividade</h2>
+                <p class="text-lg mb-4">O Copilot como Motor da Transformação Digital:</p>
+                <ul>
+                    <li>Não é apenas uma ferramenta, mas uma nova forma de trabalhar.</li>
+                    <li>Libera tempo para tarefas mais estratégicas, criativas e de maior valor.</li>
+                    <li>Ajuda a superar a sobrecarga de informação e o "trabalho pesado".</li>
+                    <li>Uma oportunidade significativa para inovação e eficiência, impulsionada pela transformação digital.</li>
+                </ul>
+            </div>
+
+            <div class="slide" data-title="Conclusão">
+                <h2 class="slide-title">Conclusão - O Futuro do Trabalho é Colaborativo</h2>
+                <p class="text-lg mb-4">Prepare-se para o Futuro com o Copilot – Uma Parceria com a Ever IT:</p>
+                <ul>
+                    <li>O Microsoft 365 Copilot está a redefinir os limites da produtividade e colaboração.</li>
+                    <li>A <strong>Ever IT</strong> está aqui para ajudar a sua organização a implementar e a tirar o máximo partido desta tecnologia transformadora.</li>
+                    <li>Capacita indivíduos e equipas a alcançarem mais, com menos esforço.</li>
+                </ul>
+                <p class="text-xl font-semibold mt-6 mb-2 text-center text-blue-700">Adote o seu copiloto e junte-se à revolução do trabalho inteligente com o apoio da Ever IT!</p>
+                <p class="text-md text-gray-700 text-center">Apresentado por: <strong>Belmiro Manuel Kunga</strong>, Técnico de IT - Ever IT, Grupo Opaia SA</p>
+                 <div class="logo-container flex justify-center items-center mt-6">
+                    <p class="text-sm text-gray-500 mt-2">(Espaço para Logos: Ever IT, Grupo Opaia SA, M365 Copilot)</p>
+                </div>
+            </div>
+            
+            <div class="slide" data-title="Contexto IA">
+                <h2 class="slide-title">Contextualizando: M365 Copilot, Gemini e ChatGPT</h2>
+                <p class="text-lg mb-4">O Microsoft 365 Copilot opera num ecossistema de Inteligência Artificial em rápida evolução, onde outras ferramentas notáveis como o Gemini (do Google) e o ChatGPT (da OpenAI) também desempenham papéis importantes:</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="slide-subtitle">Gemini (Google)</h3>
+                        <ul>
+                            <li>Modelo de IA multimodal poderoso, capaz de lidar com texto, código, imagens e mais.</li>
+                            <li>Integrado em vários produtos Google (ex: Google Workspace, Pesquisa Google).</li>
+                            <li>Foco em fornecer informações, gerar conteúdo criativo e auxiliar em tarefas diversas.</li>
+                        </ul>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <button type="button" class="modal-close mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                            Entendido
-                        </button>
+                    <div>
+                        <h3 class="slide-subtitle">ChatGPT (OpenAI)</h3>
+                        <ul>
+                            <li>Modelo de linguagem otimizado para diálogo e geração de texto conversacional.</li>
+                            <li>Amplamente conhecido pela sua capacidade de responder a perguntas, escrever diferentes tipos de conteúdo e auxiliar na programação.</li>
+                            <li>Disponível como uma ferramenta web e através de APIs para integração.</li>
+                        </ul>
                     </div>
+                </div>
+
+                <h3 class="slide-subtitle mt-8">Diferenciação do Microsoft 365 Copilot:</h3>
+                <ul>
+                    <li><strong>Integração Profunda no Ecossistema Microsoft:</strong> A principal força do M365 Copilot é a sua integração nativa com os seus dados e aplicações do Microsoft 365 (Word, Excel, PowerPoint, Teams, Outlook) através do Microsoft Graph.</li>
+                    <li><strong>Contexto Empresarial e Segurança:</strong> Projetado com a segurança, privacidade e conformidade empresarial em mente, utilizando os seus dados organizacionais de forma segura.</li>
+                    <li><strong>Foco na Produtividade no Trabalho:</strong> Enquanto Gemini e ChatGPT são mais generalistas, o M365 Copilot é especificamente otimizado para aumentar a produtividade e colaboração no ambiente de trabalho, compreendendo o seu contexto profissional.</li>
+                </ul>
+                <p class="mt-4 text-sm text-gray-600"><em>Estas ferramentas não são necessariamente concorrentes diretas em todos os aspetos, mas sim diferentes abordagens para aproveitar o poder da IA generativa para diversas finalidades. O M365 Copilot destaca-se pela sua capacidade de atuar como um verdadeiro "copiloto" dentro do seu fluxo de trabalho Microsoft.</em></p>
+            </div>
+
+            <div class="slide" data-title="Recursos Adicionais">
+                <h2 class="slide-title">Recursos Adicionais e Próximos Passos</h2>
+                <p class="text-lg mb-4">Para Saber Mais:</p>
+                <ul>
+                    <li><strong>Website Oficial Microsoft 365 Copilot:</strong> [Link para a página do Microsoft 365 Copilot]</li>
+                    <li><strong>Ever IT - Soluções e Consultoria:</strong> [Link para o website da Ever IT ou contacto]</li>
+                    <li><strong>Grupo Opaia SA:</strong> [Link para o website do Grupo Opaia SA]</li>
+                    <li><strong>Documentação e Tutoriais Microsoft:</strong> [Link para Microsoft Learn ou secção de ajuda]</li>
+                    <li><strong>Blog da Microsoft:</strong> [Link para anúncios e novidades]</li>
+                    <li><strong>Workshops Internos/Treinamentos com a Ever IT:</strong> (Contacte-nos para mais informações)</li>
+                </ul>
+            </div>
+
+            <div class="slide" data-title="Perguntas">
+                <div class="flex flex-col items-center justify-center h-full text-center">
+                    <h2 class="slide-title mb-8">Perguntas e Discussão</h2>
+                    <p class="text-xl text-gray-700 mb-4">Dúvidas?</p>
+                    <p class="text-lg text-gray-600"><strong>Belmiro Manuel Kunga</strong> (Ever IT, Grupo Opaia SA) está à disposição para responder.</p>
+                     <img src="https://placehold.co/300x200/dbeafe/1e40af?text=Q%26A" alt="Imagem de Perguntas e Respostas" class="rounded-lg shadow-md mt-8">
                 </div>
             </div>
         </div>
-        
-        <section id="administrativa" class="content-section js-scroll-animate">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA para Eficiência Administrativa e Assistência Executiva</h2>
-            <p class="mb-8 text-lg leading-relaxed">Assistentes Executivos (EAs) frequentemente enfrentam uma sobrecarga de tarefas operacionais e repetitivas. A Inteligência Artificial surge como uma solução poderosa para otimizar o tempo destes profissionais, permitindo que se concentrem em trabalho estratégico e de maior impacto. Esta secção detalha ferramentas de IA que podem revolucionar a eficiência administrativa.</p>
 
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Assistente+Executivo+com+IA" alt="Assistente executivo a trabalhar com ferramentas de IA para otimização de tarefas." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p id="slideIndicator" class="text-center text-sm text-gray-600 mt-2"></p>
 
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Escrita e Comunicação</h3>
-                    <p class="text-slate-600 mb-4">Aprimoram a qualidade da escrita, geram conteúdo, refinam a comunicação e adaptam o tom, garantindo profissionalismo.</p>
-                    <div class="flex justify-center my-4 relative">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=IA+na+Escrita+(GIF+Placeholder)" alt="Pessoa a escrever num computador com elementos de IA a ajudar, simbolizando a escrita assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <svg class="w-16 h-16 text-sky-600 opacity-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                        </div>
-                    </div>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://chat.openai.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">ChatGPT</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Gera rascunhos de e-mails, esboços de documentos, resumos.</p>
-                            <span class="details-toggle" data-target="chatgpt-details">Mostrar aplicabilidade ▼</span>
-                            <div id="chatgpt-details" class="details-content text-sm text-slate-500">
-                                <p>EA usa ChatGPT para rascunho de e-mail a *stakeholders*, depois GrammarlyGO para refinar tom e gramática, garantindo profissionalismo e alinhamento com a voz do executivo.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.grammarly.com/grammarlygo" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">GrammarlyGO</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Edição e sugestões de tom orientadas por IA; reescrita de frases para impacto.</p>
-                             <span class="details-toggle" data-target="grammarly-details">Mostrar aplicabilidade ▼</span>
-                            <div id="grammarly-details" class="details-content text-sm text-slate-500">
-                                <p>EA utiliza GrammarlyGO para revisar uma proposta comercial importante, ajustando o tom para ser mais persuasivo e garantindo que a linguagem seja clara e livre de erros antes de enviar ao cliente.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.wordtune.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Wordtune</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Melhorias inteligentes de reformulação e clareza.</p>
-                            <span class="details-toggle" data-target="wordtune-details">Mostrar aplicabilidade ▼</span>
-                            <div id="wordtune-details" class="details-content text-sm text-slate-500">
-                                <p>Ao preparar um comunicado interno, o EA usa Wordtune para explorar diferentes formas de expressar uma mensagem complexa, escolhendo a formulação mais concisa e impactante.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Transcrição e Resumo de Reuniões</h3>
-                    <p class="text-slate-600 mb-4">Transcrevem reuniões em tempo real, identificam pontos-chave e geram resumos concisos com itens de ação.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Transcrição+de+Reuniões" alt="Icone de microfone com ondas sonoras a serem transcritas, simbolizando transcrição de reuniões." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://otter.ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Otter.ai</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Transcrição em tempo real e resumos baseados em palavras-chave.</p>
-                            <span class="details-toggle" data-target="otter-details">Mostrar aplicabilidade ▼</span>
-                            <div id="otter-details" class="details-content text-sm text-slate-500">
-                                <p>Durante uma chamada de brainstorming, o EA usa Otter.ai para capturar todas as ideias. Após a reunião, revisa a transcrição e os resumos para compilar um relatório de ideias principais.</p>
-                            </div>
-                        </div>
-                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://fathom.video/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Fathom</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Resumos automáticos de reuniões do Zoom.</p>
-                            <span class="details-toggle" data-target="fathom-details">Mostrar aplicabilidade ▼</span>
-                            <div id="fathom-details" class="details-content text-sm text-slate-500">
-                                <p>Para reuniões recorrentes via Zoom, o Fathom gera automaticamente resumos, permitindo ao EA distribuir rapidamente os pontos de discussão e decisões para os participantes ausentes.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://fireflies.ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Fireflies.ai</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Resumos abrangentes de IA com notas detalhadas, pontos-chave e itens de ação.</p>
-                             <span class="details-toggle" data-target="fireflies-details">Mostrar aplicabilidade ▼</span>
-                            <div id="fireflies-details" class="details-content text-sm text-slate-500">
-                                <p>Fireflies.ai grava e transcreve reunião estratégica, gerando resumo com itens de ação. EA revisa, prioriza e cria tarefas detalhadas em sistema de gestão de projetos.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Gerenciamento de Calendário e Tempo</h3>
-                    <p class="text-slate-600 mb-4">Analisam calendários, detectam conflitos e reorganizam agendas com base em prioridades, protegendo blocos de trabalho focado.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Calendário+Inteligente" alt="Calendário digital com ícones de IA, simbolizando o gerenciamento inteligente de agenda." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://motion.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Motion</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Constrói automaticamente o dia do executivo em torno das prioridades.</p>
-                            <span class="details-toggle" data-target="motion-details">Mostrar aplicabilidade ▼</span>
-                            <div id="motion-details" class="details-content text-sm text-slate-500">
-                                <p>O EA configura o Motion com as prioridades semanais do executivo. A ferramenta então organiza automaticamente a agenda, agendando tarefas e reuniões para otimizar o fluxo de trabalho.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.getclockwise.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Clockwise</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Assistente de calendário AI que otimiza o tempo para trabalho profundo.</p>
-                             <span class="details-toggle" data-target="clockwise-details">Mostrar aplicabilidade ▼</span>
-                            <div id="clockwise-details" class="details-content text-sm text-slate-500">
-                                <p>EA usa Clockwise para identificar e proteger janelas de tempo produtivas do executivo, refinando sugestões da IA com base no conhecimento aprofundado das prioridades.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://reclaim.ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Reclaim.ai</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Sincroniza prioridades pessoais e profissionais.</p>
-                            <span class="details-toggle" data-target="reclaim-details">Mostrar aplicabilidade ▼</span>
-                            <div id="reclaim-details" class="details-content text-sm text-slate-500">
-                                <p>Para garantir um bom equilíbrio entre vida pessoal e profissional do executivo, o EA utiliza Reclaim.ai para bloquear automaticamente tempo para compromissos pessoais importantes e pausas.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Construtores de Documentos e Apresentações</h3>
-                    <p class="text-slate-600 mb-4">Criam documentos e apresentações visualmente atraentes, automatizando *design* e formatação.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Criação+de+Apresentações+IA" alt="Pessoa a criar uma apresentação com ícones de IA, simbolizando a criação de documentos assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://beautiful.ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Beautiful.ai</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Construtor de *slides* intuitivo com formatação automática.</p>
-                            <span class="details-toggle" data-target="beautifulai-details">Mostrar aplicabilidade ▼</span>
-                            <div id="beautifulai-details" class="details-content text-sm text-slate-500">
-                                <p>EA usa Beautiful.ai para gerar *layout* profissional para apresentação do conselho, garantindo que a IA cuide da estética enquanto o EA foca na narrativa e estratégia.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Canva</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Ferramenta de *design* com recursos de *Magic Design* e automação de apresentação.</p>
-                            <span class="details-toggle" data-target="canva-details">Mostrar aplicabilidade ▼</span>
-                            <div id="canva-details" class="details-content text-sm text-slate-500">
-                                <p>Para criar materiais de marketing rápidos ou posts para redes sociais internas, o EA utiliza os recursos de IA do Canva para gerar designs atraentes rapidamente.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://tome.app/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Tome</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Criação rápida de apresentações visuais a partir de *prompts* de texto.</p>
-                            <span class="details-toggle" data-target="tome-details">Mostrar aplicabilidade ▼</span>
-                            <div id="tome-details" class="details-content text-sm text-slate-500">
-                                <p>Quando precisa de uma apresentação visual com urgência, o EA insere os pontos chave no Tome, que gera uma primeira versão da apresentação, economizando tempo de design.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Ferramentas de Automação de Tarefas e Fluxos de Trabalho</h3>
-                    <p class="text-slate-600 mb-4">Automatizam tarefas rotineiras e repetitivas, conectando aplicativos para compartilhar informações e acionar ações.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Automação+de+Fluxos" alt="Engrenagens e setas a conectar diferentes ícones de aplicativos, simbolizando a automação de fluxos de trabalho." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://zapier.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Zapier</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Plataforma sem código para automação entre milhares de aplicativos.</p>
-                            <span class="details-toggle" data-target="zapier-details">Mostrar aplicabilidade ▼</span>
-                            <div id="zapier-details" class="details-content text-sm text-slate-500">
-                                <p>EA usa Zapier para automatizar atualização semanal de rastreador de projetos, extraindo *status* de e-mails/Slack e inserindo no sistema de gestão de projetos, com o EA garantindo o contexto de negócios.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.make.com/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Make (Integromat)</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Para fluxos de trabalho multi-etapas mais avançados.</p>
-                            <span class="details-toggle" data-target="make-details">Mostrar aplicabilidade ▼</span>
-                            <div id="make-details" class="details-content text-sm text-slate-500">
-                                <p>Para automatizar o processo de onboarding de novos clientes, o EA configura um fluxo de trabalho no Make que integra o CRM, a plataforma de email marketing e o sistema de gestão de projetos.</p>
-                            </div>
-                        </div>
-                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.notion.so/product/ai" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Notion AI</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Gerenciamento de tarefas e automação dentro de um único espaço de trabalho.</p>
-                            <span class="details-toggle" data-target="notionai-details">Mostrar aplicabilidade ▼</span>
-                            <div id="notionai-details" class="details-content text-sm text-slate-500">
-                                <p>O EA utiliza o Notion AI para resumir notas de reuniões extensas, extrair itens de ação e criar automaticamente tarefas dentro da base de dados de projetos da equipe no Notion.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quiz Rápido -->
-                <div class="card mt-8 js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-sky-600 mb-4">Quiz Rápido: Eficiência Administrativa</h3>
-                    <p class="text-slate-700 mb-3">Qual ferramenta é mais indicada para gerar automaticamente resumos de reuniões do Zoom?</p>
-                    <div class="space-y-2">
-                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">A) GrammarlyGO</button>
-                        <button onclick="checkQuizAnswer(this, true)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">B) Fathom</button>
-                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">C) Beautiful.ai</button>
-                    </div>
-                    <p id="quiz-feedback-admin" class="mt-3 text-sm font-medium"></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="financeira" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA na Gestão Financeira e Contabilidade</h2>
-            <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a remodelar o setor financeiro, oferecendo análises mais profundas, melhor gestão de riscos e uma eficiência sem precedentes. Para Diretores Financeiros (CFOs) e profissionais da área, a IA é uma ferramenta essencial para decisões informadas e estratégicas. Esta secção explora como a IA está a transformar a gestão financeira e a contabilidade.</p>
-            
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Finanças+com+IA" alt="Gráficos financeiros com elementos de IA, simbolizando a gestão financeira assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Análise de Dados e Insights</h3>
-                    <p class="text-slate-600 mb-4">Ferramentas de IA analisam fluxos financeiros complexos em tempo real, identificam riscos ocultos e otimizam o planeamento com inteligência preditiva.</p>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://quickbooks.intuit.com/assist/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Intuit Assist (QuickBooks)</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Assistente financeiro virtual com recomendações personalizadas, monitoramento de transações e fluxo de caixa.</p>
-                            <span class="details-toggle" data-target="intuit-details">Mostrar aplicabilidade ▼</span>
-                            <div id="intuit-details" class="details-content text-sm text-slate-500">
-                                <p>CFO usa IA (como Intuit Assist) para prever tendências de mercado, analisando dados históricos e indicadores econômicos para identificar riscos de queda em portfólios e sugerir rebalanceamentos proativos. Intuit Assist também automatiza a criação de faturas e envia lembretes de pagamento inteligentes.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.xero.com/blog/2023/08/just-ask-xero-jax/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Just Ask Xero (JAX)</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Automatiza tarefas contábeis, resume dados e oferece alertas em tempo real.</p>
-                            <span class="details-toggle" data-target="jax-details">Mostrar aplicabilidade ▼</span>
-                            <div id="jax-details" class="details-content text-sm text-slate-500">
-                                <p>Um contabilista utiliza JAX para obter rapidamente um resumo das despesas do último trimestre e identificar as categorias com maiores gastos, facilitando a preparação de relatórios.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1"><a href="https://www.sage.com/en-gb/sage-ai/" target="_blank" rel="noopener noreferrer" class="hover:underline text-sky-500">Sage Copilot</a></h4>
-                            <p class="text-sm text-slate-600 mb-2">Analisa dados financeiros, sinaliza pagamentos atrasados e prioriza tarefas.</p>
-                            <span class="details-toggle" data-target="sage-details">Mostrar aplicabilidade ▼</span>
-                            <div id="sage-details" class="details-content text-sm text-slate-500">
-                                <p>A equipa financeira usa Sage Copilot para identificar automaticamente faturas em atraso e priorizar o contacto com os clientes devedores, melhorando o fluxo de caixa.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Avaliação e Gerenciamento de Riscos</h3>
-                    <p class="text-slate-700 mb-2">Algoritmos de IA analisam desempenho histórico, condições de mercado e indicadores econômicos para avaliação precisa do portfólio de investimentos.</p>
-                    <p class="text-slate-700 font-medium">Benefícios: Aumenta a precisão, fornece alertas proativos e permite tomada de decisão mais confiante.</p>
-                    <div class="flex justify-center my-4 relative">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Gestão+de+Riscos+IA+(GIF)" alt="Gráfico de risco com elementos de IA, simbolizando a gestão de riscos assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <svg class="w-16 h-16 text-sky-600 opacity-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Automação de Processos Financeiros e Contábeis</h3>
-                    <p class="text-slate-700 mb-2">Elimina processos manuais, reduzindo erros e aumentando a precisão em previsões e relatórios.</p>
-                    <p class="text-slate-700 font-medium">Exemplo de Aplicabilidade: Intuit Assist automatiza a criação de faturas a partir de recibos e e-mails, e envia lembretes de pagamento inteligentes, otimizando o fluxo de caixa.</p>
-                    <div class="flex justify-center my-4 relative">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Automação+Contábil+(GIF)" alt="Ícones de documentos e dinheiro com setas e elementos de IA, simbolizando a automação de processos contábeis." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                         <div class="absolute inset-0 flex items-center justify-center">
-                            <svg class="w-16 h-16 text-sky-600 opacity-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Outras Aplicações e Benefícios</h3>
-                     <ul class="list-disc list-inside space-y-2 text-slate-700">
-                        <li>Aconselhamento Financeiro Personalizado a custos reduzidos.</li>
-                        <li>Experiência e Engajamento do Cliente Aprimorados.</li>
-                        <li>Redução de Custos e Escalabilidade.</li>
-                        <li>Conformidade Regulatória automatizada.</li>
-                        <li><strong>Consideração:</strong> Necessidade de governança robusta para evitar vieses éticos.</li>
-                    </ul>
-                </div>
-
-                <!-- Quiz Rápido -->
-                <div class="card mt-8 js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-sky-600 mb-4">Quiz Rápido: Gestão Financeira</h3>
-                    <p class="text-slate-700 mb-3">Qual das seguintes ferramentas de IA é destacada por automatizar a criação de faturas e enviar lembretes de pagamento inteligentes?</p>
-                    <div class="space-y-2">
-                        <button onclick="checkQuizAnswer(this, true)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">A) Intuit Assist</button>
-                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">B) Sage Copilot</button>
-                        <button onclick="checkQuizAnswer(this, false)" class="quiz-option w-full text-left p-3 bg-slate-100 hover:bg-sky-100 rounded-md transition-colors">C) Just Ask Xero (JAX)</button>
-                    </div>
-                    <p id="quiz-feedback-financeira" class="mt-3 text-sm font-medium"></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="rh" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA em Recursos Humanos e Gestão de Talentos</h2>
-            <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a revolucionar o departamento de Recursos Humanos (RH), otimizando o ciclo de vida do talento, desde o recrutamento e seleção até à gestão de desempenho e retenção. A IA permite que as equipas de RH operem de forma mais estratégica, eficiente e imparcial. Esta secção destaca como a IA está a transformar a gestão de talentos.</p>
-
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=RH+Inteligente" alt="Pessoas e ícones de IA, simbolizando a gestão de RH assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Recrutamento e Entrevistas</h3>
-                    <p class="text-slate-600 mb-4">Automatizam *sourcing*, triagem e correspondência de candidatos; conduzem entrevistas por vídeo avaliando habilidades e identificando "bandeiras vermelhas".</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Recrutamento+IA" alt="Pessoas a serem entrevistadas por um robô, simbolizando o recrutamento com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">HireVue</h4>
-                            <p class="text-sm text-slate-600 mb-2">Analisa entrevistas por vídeo (sinais verbais/não verbais, inteligência emocional).</p>
-                             <span class="details-toggle" data-target="hirevue-details">Mostrar aplicabilidade ▼</span>
-                            <div id="hirevue-details" class="details-content text-sm text-slate-500">
-                                <p>Empresa de tecnologia usa HireVue para primeiras rodadas de entrevistas em vídeo, com IA analisando respostas e tom, permitindo que recrutadores foquem em candidatos mais promissores.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Paradox (Olivia)</h4>
-                            <p class="text-sm text-slate-600 mb-2">*Chatbot* de IA conversacional para contratação, organiza talentos qualificados.</p>
-                            <span class="details-toggle" data-target="paradox-details">Mostrar aplicabilidade ▼</span>
-                            <div id="paradox-details" class="details-content text-sm text-slate-500">
-                                <p>Uma grande cadeia de retalho utiliza o chatbot Olivia para interagir com milhares de candidatos, agendando entrevistas e respondendo a perguntas frequentes 24/7.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Pymetrics (Harver)</h4>
-                            <p class="text-sm text-slate-600 mb-2">Avaliação de candidatos impulsionada por IA, reduz rotatividade.</p>
-                            <span class="details-toggle" data-target="pymetrics-details">Mostrar aplicabilidade ▼</span>
-                            <div id="pymetrics-details" class="details-content text-sm text-slate-500">
-                                <p>Uma empresa de consultoria usa Pymetrics para avaliar as competências comportamentais e cognitivas dos candidatos, comparando-os com perfis de sucesso internos para prever o desempenho e a adequação cultural.</p>
-                            </div>
-                        </div>
-                         <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">X0PA AI</h4>
-                            <p class="text-sm text-slate-600 mb-2">Recrutamento sem viés, correspondência inteligente de candidatos.</p>
-                            <span class="details-toggle" data-target="xopa-details">Mostrar aplicabilidade ▼</span>
-                            <div id="xopa-details" class="details-content text-sm text-slate-500">
-                                <p>Uma organização multinacional implementa X0PA AI para garantir um processo de recrutamento mais justo e objetivo, analisando candidatos com base em mérito e potencial, minimizando vieses inconscientes.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Interviewer AI</h4>
-                            <p class="text-sm text-slate-600 mb-2">Plataforma de entrevista por vídeo com bibliotecas de perguntas e análise comparativa.</p>
-                            <span class="details-toggle" data-target="interviewerai-details">Mostrar aplicabilidade ▼</span>
-                            <div id="interviewerai-details" class="details-content text-sm text-slate-500">
-                                <p>Uma startup em crescimento utiliza Interviewer AI para padronizar o processo de entrevista para diversas vagas, garantindo que todos os candidatos sejam avaliados de forma consistente.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Gestão e Retenção de Talentos</h3>
-                    <p class="text-slate-600 mb-4">Correspondem funcionários a planos de carreira, otimizam aquisição de talentos internos/externos e reduzem rotatividade.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Gestão+de+Talentos+IA" alt="Pessoas a subir uma escada de carreira com ícones de IA, simbolizando a gestão de talentos assistida por IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                    <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                        <h4 class="text-lg font-semibold mb-1">Eightfold AI</h4>
-                        <p class="text-sm text-slate-600 mb-2">Plataforma abrangente de gestão de talentos que mapeia planos de carreira e prevê evolução de habilidades.</p>
-                        <span class="details-toggle" data-target="eightfold-details">Mostrar aplicabilidade ▼</span>
-                        <div id="eightfold-details" class="details-content text-sm text-slate-500">
-                            <p>Uma empresa global usa Eightfold AI para identificar oportunidades de mobilidade interna e programas de requalificação para os seus colaboradores, alinhando as suas aspirações de carreira com as necessidades da empresa.</p>
-                        </div>
-                    </div>
-                    <p class="mt-3 text-slate-700 font-medium">Benefícios: Aumento do engajamento, redução de custos de rotatividade, alinhamento da força de trabalho com necessidades futuras.</p>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Suporte de RH</h3>
-                    <p class="text-slate-600 mb-4">*Chatbots* de IA automatizam respostas a FAQs e consultas de funcionários sobre políticas e processos.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Chatbot+RH" alt="Ícone de um chatbot a conversar com uma pessoa, simbolizando o suporte de RH com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                        <h4 class="text-lg font-semibold mb-1">Leena AI</h4>
-                        <p class="text-sm text-slate-600 mb-2">Plataforma de IA que automatiza FAQs e consultas de funcionários para suporte interno.</p>
-                        <span class="details-toggle" data-target="leena-details">Mostrar aplicabilidade ▼</span>
-                        <div id="leena-details" class="details-content text-sm text-slate-500">
-                            <p>Uma empresa com muitos funcionários remotos implementa Leena AI para fornecer respostas instantâneas a perguntas comuns sobre benefícios, licenças e políticas internas, melhorando a experiência do colaborador.</p>
-                        </div>
-                    </div>
-                    <p class="mt-3 text-slate-700 font-medium">Benefícios: Respostas rápidas 24/7, redução da carga de trabalho do RH, foco em questões estratégicas.</p>
-                </div>
-                 <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma em RH</h3>
-                    <p class="text-slate-700">A IA transforma o RH de reativo para proativo, antecipando lacunas de habilidades e riscos de atrito, permitindo uma gestão de talentos mais estratégica e orientada para o futuro.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="ti" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA em Operações de TI e Cibersegurança</h2>
-            <p class="mb-8 text-lg leading-relaxed">Num cenário de ameaças digitais em constante evolução, a Inteligência Artificial é um componente crítico para a defesa e otimização da infraestrutura de TI. A IA oferece capacidades avançadas de deteção e resposta a ameaças em tempo real, mitigando riscos e protegendo ativos digitais. Esta secção explora como a IA fortalece as operações de TI e a cibersegurança.</p>
-            
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Cibersegurança+IA" alt="Cadeado digital com ícones de IA, simbolizando a cibersegurança assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Deteção de Ameaças e Anomalias</h3>
-                    <p class="text-slate-600 mb-2">Ferramentas de IA identificam "*shadow data*", monitoram anormalidades em padrões de acesso e alertam sobre ameaças.</p>
-                    <p class="text-slate-700 mb-2 font-medium">Benefícios: Economiza tempo na deteção e remediação, mitiga riscos de violação de dados, fortalece a postura de segurança.</p>
-                    <div class="bg-sky-50 p-4 rounded-lg mt-3">
-                        <h4 class="font-semibold text-sky-700 mb-1">Exemplo de Aplicabilidade:</h4>
-                        <p class="text-sm text-slate-600">Ferramenta de IA monitora tráfego de rede; se um funcionário acessa dados confidenciais fora do padrão (ex: horário incomum, dispositivo não reconhecido), a IA detecta a anomalia e alerta a equipe de segurança para resposta rápida, prevenindo potenciais violações.</p>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Remediação em Tempo Real</h3>
-                    <p class="text-slate-600 mb-2">Auxilia na remediação de problemas, fornecendo informações acionáveis e, em alguns casos, automatizando respostas (ex: isolar dispositivo comprometido).</p>
-                    <p class="text-slate-700 font-medium">Benefícios: Reduz significativamente o tempo de resposta a incidentes (MTTR), minimiza o impacto de ataques cibernéticos.</p>
-                </div>
-                
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma em Cibersegurança</h3>
-                    <p class="text-slate-700">A IA transforma a cibersegurança de reativa para preditiva e proativa, permitindo uma defesa mais robusta contra ameaças emergentes através da "segurança baseada em comportamento".</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="construcao" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">IA na Indústria da Construção</h2>
-            <p class="mb-8 text-lg leading-relaxed">A Inteligência Artificial está a revolucionar a indústria da construção, impactando desde o planeamento e *design* até à segurança no local, gestão da cadeia de suprimentos e manutenção. A IA melhora resultados, economiza custos e otimiza processos. Esta secção detalha as aplicações transformadoras da IA na construção civil.</p>
-
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Construção+Inteligente" alt="Canteiro de obras com elementos de IA, simbolizando a construção civil assistida por IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Planeamento e Design</h3>
-                    <p class="text-slate-600 mb-4">Acelera e torna mais preciso o planeamento, avaliando múltiplos cenários de cronograma, recursos e custos. Software BIM com IA entrega modelos 3D mais precisos.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=BIM+com+IA" alt="Modelo 3D de edifício com elementos de IA, simbolizando o planeamento e design com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                    <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                        <h4 class="text-lg font-semibold mb-1">ALICE (AI-powered Construction Schedule Optimization Software)</h4>
-                        <p class="text-sm text-slate-600 mb-2">Otimiza e desrisca projetos, gera múltiplos cronogramas viáveis, integra custo e escopo.</p>
-                        <span class="details-toggle" data-target="alice-details">Mostrar aplicabilidade ▼</span>
-                        <div id="alice-details" class="details-content text-sm text-slate-500">
-                            <p>Para construção de ponte, ALICE gera e analisa milhares de cenários de cronograma, otimizando sequência de tarefas, alocação de equipamentos e prevendo atrasos com base na disponibilidade de materiais.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Segurança e Monitoramento de Canteiros de Obras</h3>
-                    <p class="text-slate-600 mb-4">Câmeras e *drones* com IA monitoram em tempo real, detectando violações de segurança (ex: falta de EPI), perigos e pessoal não autorizado.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Drone+em+Obra" alt="Drone a voar sobre um canteiro de obras, simbolizando o monitoramento de segurança com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Motive</h4>
-                            <p class="text-sm text-slate-600 mb-2">Câmeras de painel com IA para detectar comportamentos inseguros, telemática e monitoramento de equipamentos.</p>
-                            <span class="details-toggle" data-target="motive-details">Mostrar aplicabilidade ▼</span>
-                            <div id="motive-details" class="details-content text-sm text-slate-500">
-                                <p>Drones com IA (usando plataformas como Motive ou HSI) identificam andaimes soltos ou trabalhadores sem EPI, alertando supervisores em tempo real, prevenindo acidentes.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">HSI</h4>
-                            <p class="text-sm text-slate-600 mb-2">Deteção de perigos impulsionada por IA (andaimes soltos, equipamentos perto de solo instável).</p>
-                            <span class="details-toggle" data-target="hsi-details">Mostrar aplicabilidade ▼</span>
-                            <div id="hsi-details" class="details-content text-sm text-slate-500">
-                                <p>HSI analisa imagens de drones para identificar potenciais perigos geológicos, como solo instável perto de escavações, antes que se tornem um risco para os trabalhadores.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Manutenção Preditiva</h3>
-                    <p class="text-slate-600 mb-2">Constrói cronogramas de manutenção preditiva para equipamentos, analisando dados de sensores para prever falhas.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Manutenção+Preditiva+IA" alt="Máquina de construção com sensores e gráficos, simbolizando a manutenção preditiva com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                    <div class="bg-sky-50 p-4 rounded-lg mt-3">
-                        <h4 class="font-semibold text-sky-700 mb-1">Exemplo de Aplicabilidade:</h4>
-                        <p class="text-sm text-slate-600">Sensores de IA em escavadeiras detectam vibração incomum, preveem falha iminente e agendam manutenção, evitando atrasos e prolongando vida útil do equipamento.</p>
-                    </div>
-                </div>
-                
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Gestão da Cadeia de Suprimentos</h3>
-                    <p class="text-slate-600 mb-2">Analisam dados históricos e em tempo real para prever demanda por materiais, otimizando aquisição e entrega.</p>
-                    <div class="flex justify-center my-4">
-                        <img src="https://placehold.co/400x200/e0f2fe/0c4a6e?text=Cadeia+de+Suprimentos+IA" alt="Caminhões e armazéns com ícones de IA, simbolizando a gestão da cadeia de suprimentos com IA." class="w-full max-w-md h-auto rounded-lg shadow-sm">
-                    </div>
-                     <div class="bg-sky-50 p-4 rounded-lg mt-3">
-                        <h4 class="font-semibold text-sky-700 mb-1">Exemplo de Aplicabilidade:</h4>
-                        <p class="text-sm text-slate-600">IA analisa dados de consumo de materiais, padrões de entrega e progresso do projeto para prever demanda exata de concreto, aço e madeira, otimizando pedidos e minimizando desperdício.</p>
-                    </div>
-                </div>
-
-                 <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Outras Aplicações Relevantes</h3>
-                     <ul class="list-disc list-inside space-y-2 text-slate-700">
-                        <li><strong>Controle de Qualidade:</strong> Robôs e *drones* com IA inspecionam e identificam defeitos.</li>
-                        <li><strong>Automação de *Back Office*:</strong > Software de automação de contas a pagar com IA melhora eficiência no processamento de faturas.</li>
-                    </ul>
-                </div>
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Mudança de Paradigma na Construção</h3>
-                    <p class="text-slate-700">Transição de gerenciamento de projetos reativo para preditivo, otimizado por dados e com maior controle, levando a projetos mais eficientes, seguros e rentáveis.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="automacao" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">Automação e Integração de Fluxos de Trabalho com IA</h2>
-            <p class="mb-8 text-lg leading-relaxed">A capacidade da Inteligência Artificial de integrar-se e automatizar tarefas entre diferentes plataformas é crucial para a eficiência operacional. Plataformas de automação atuam como pontes digitais, conectando aplicativos e serviços para orquestrar fluxos de trabalho complexos, quebrando silos de dados e aumentando a produtividade. Esta secção foca em como a IA capacita esta integração.</p>
-
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Integração+de+Fluxos+IA" alt="Ícones de diferentes aplicativos conectados por setas, simbolizando a integração de fluxos de trabalho com IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="space-y-8">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-4">Plataformas de Integração e Automação</h3>
-                    <p class="text-slate-600 mb-4">Conectam aplicativos e serviços díspares para automatizar fluxos de trabalho complexos e multifuncionais, melhorando a precisão dos dados e a produtividade.</p>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Zapier</h4>
-                            <p class="text-sm text-slate-600 mb-2">Plataforma amigável e sem código para automação entre milhares de aplicativos.</p>
-                            <span class="details-toggle" data-target="zapier-auto-details">Mostrar aplicabilidade ▼</span>
-                            <div id="zapier-auto-details" class="details-content text-sm text-slate-500">
-                                <p>Equipe de vendas usa Zapier para automatizar acompanhamento de *leads*: captura *lead* do *website*, cria contato no CRM, envia e-mail de boas-vindas e notifica via Slack, eliminando entrada manual e garantindo follow-up.</p>
-                            </div>
-                        </div>
-                        <div class="tool-card p-4 border border-slate-200 rounded-lg">
-                            <h4 class="text-lg font-semibold mb-1">Make (anteriormente Integromat)</h4>
-                            <p class="text-sm text-slate-600 mb-2">Para fluxos de trabalho multi-etapas mais avançados e complexos.</p>
-                            <span class="details-toggle" data-target="make-auto-details">Mostrar aplicabilidade ▼</span>
-                            <div id="make-auto-details" class="details-content text-sm text-slate-500">
-                                <p>Uma equipa de marketing utiliza Make para criar um fluxo de trabalho que, após a submissão de um formulário de contacto, adiciona o utilizador a uma lista de email marketing, cria uma tarefa para um vendedor no CRM e envia uma mensagem personalizada para o Slack da equipa.</p>
-                            </div>
-                        </div>
-                    </div>
-                     <p class="mt-4 text-slate-700 font-medium">Benefícios: Quebra silos de dados, aumenta drasticamente a produtividade, melhora a precisão dos dados.</p>
-                </div>
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Sinergia Operacional</h3>
-                    <p class="text-slate-700">A IA não apenas otimiza tarefas individuais, mas cria um ecossistema interconectado onde os dados fluem livremente e as ações são acionadas de forma inteligente, resultando numa organização mais coesa e responsiva.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="conclusao" class="content-section">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-sky-700 mb-6">Conclusão: Abrace a Transformação da IA</h2>
-            <p class="mb-6 text-lg leading-relaxed">A Inteligência Artificial está a estabelecer-se como uma força motriz essencial para a otimização e inovação em múltiplos domínios empresariais. A sua capacidade de amplificar as capacidades humanas, automatizar processos e integrar fluxos de trabalho é fundamental para o sucesso na era digital. Esta secção resume os principais pontos e o caminho a seguir.</p>
-            
-            <div class="flex justify-center my-6 js-scroll-animate">
-                <img src="https://placehold.co/600x300/e0f2fe/0c4a6e?text=Futuro+com+IA" alt="Pessoas e robôs a trabalhar juntos num ambiente futurista, simbolizando o futuro com IA." class="w-full max-w-xl h-auto rounded-lg shadow-md">
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">Principais Pilares da Transformação com IA</h3>
-                    <ul class="list-disc list-inside space-y-2 text-slate-700">
-                        <li><strong>IA como Força Essencial:</strong> Otimização e inovação em múltiplos domínios empresariais.</li>
-                        <li><strong>IA Aumentada:</strong> Amplifica capacidades humanas, liberando profissionais para o estratégico e criativo.</li>
-                        <li><strong>Integração e Automação:</strong> Fundamental para quebrar silos e criar sinergia operacional.</li>
-                    </ul>
-                </div>
-                <div class="card js-scroll-animate">
-                    <h3 class="text-xl font-semibold text-emerald-600 mb-3">O Caminho a Seguir</h3>
-                    <ul class="list-disc list-inside space-y-2 text-slate-700">
-                        <li>Exploração contínua de novas ferramentas e aplicações de IA.</li>
-                        <li>Investimento na capacitação de equipes para trabalhar em conjunto com a IA.</li>
-                        <li>Desenvolvimento de uma cultura que abrace a inovação e adaptação contínua.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="card mt-8 bg-sky-600 text-white js-scroll-animate">
-                <h3 class="text-xl font-semibold mb-3">Benefício Final</h3>
-                <p class="leading-relaxed">A adoção estratégica da IA não apenas otimiza operações, mas desbloqueia novas oportunidades de crescimento, competitividade e liderança de mercado, preparando as organizações para os desafios e oportunidades do futuro.</p>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-800 text-slate-300 text-center p-6 mt-12">
-        <p>&copy; <span id="currentYear"></span> Aplicação Interativa sobre IA no Mundo Corporativo. Conteúdo adaptado do seu relatório.</p>
-    </footer>
+        <div class="flex justify-between mt-4">
+            <button id="prevButton" class="nav-button">Anterior</button>
+            <button id="nextButton" class="nav-button">Próximo</button>
+        </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tabs = document.querySelectorAll('.tab-button');
-            const sections = document.querySelectorAll('.content-section');
-            const detailToggles = document.querySelectorAll('.details-toggle');
-            const body = document.body;
+        // Elementos do DOM
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const progressBar = document.getElementById('progressBar');
+        const slideIndicator = document.getElementById('slideIndicator');
+        
+        const welcomeModal = document.getElementById('welcomeModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const presentationContainer = document.getElementById('presentationContainer');
 
-            // Função para navegação por abas
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function () {
-                    const targetId = this.dataset.tab;
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length; // Isto será atualizado automaticamente
 
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-
-                    sections.forEach(section => {
-                        if (section.id === targetId) {
-                            section.classList.add('active');
-                        } else {
-                            section.classList.remove('active');
-                        }
-                    });
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo da página
-                });
+        // Função para mostrar o slide atual
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
             });
+            updateNavigation();
+            updateProgressBar();
+            updateSlideIndicator();
+        }
 
-            // Função para mostrar/esconder detalhes
-            detailToggles.forEach(toggle => {
-                toggle.addEventListener('click', function () {
-                    const targetId = this.dataset.target;
-                    const targetContent = document.getElementById(targetId);
-                    if (targetContent) {
-                        if (targetContent.style.display === 'block') {
-                            targetContent.style.display = 'none';
-                            this.textContent = this.textContent.replace('▲', '▼');
-                        } else {
-                            targetContent.style.display = 'block';
-                             this.textContent = this.textContent.replace('▼', '▲');
-                        }
-                    }
-                });
-            });
+        // Função para atualizar os botões de navegação
+        function updateNavigation() {
+            prevButton.disabled = currentSlideIndex === 0;
+            nextButton.disabled = currentSlideIndex === totalSlides - 1;
+        }
 
-            // Função para Quiz Rápido
-            window.checkQuizAnswer = function(button, isCorrect) {
-                const feedbackEl = button.closest('.card').querySelector('p[id^="quiz-feedback-"]');
-                const quizOptions = button.parentElement.querySelectorAll('.quiz-option');
+        // Função para atualizar a barra de progresso
+        function updateProgressBar() {
+            const progressPercentage = ((currentSlideIndex + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
 
-                quizOptions.forEach(opt => {
-                    opt.disabled = true;
-                    opt.classList.remove('bg-sky-100', 'hover:bg-sky-100');
-                    opt.classList.add('bg-slate-50', 'text-slate-500');
-                });
+        // Função para atualizar o indicador de slide
+        function updateSlideIndicator() {
+            const currentSlideTitle = slides[currentSlideIndex].dataset.title || `Slide ${currentSlideIndex + 1}`;
+            slideIndicator.textContent = `${currentSlideTitle} (${currentSlideIndex + 1} de ${totalSlides})`;
+        }
 
-                if (isCorrect) {
-                    button.classList.remove('bg-slate-50', 'text-slate-500');
-                    button.classList.add('bg-green-500', 'text-white');
-                    feedbackEl.textContent = 'Correto! 🎉';
-                    feedbackEl.className = 'mt-3 text-sm font-medium text-green-600';
-                } else {
-                    button.classList.remove('bg-slate-50', 'text-slate-500');
-                    button.classList.add('bg-red-500', 'text-white');
-                    feedbackEl.textContent = 'Incorreto. Tente novamente na próxima!';
-                    feedbackEl.className = 'mt-3 text-sm font-medium text-red-600';
-                    // Destacar a correta
-                    quizOptions.forEach(opt => {
-                        // Ajuste para destacar a opção correta dinamicamente ou adicione uma lógica específica por quiz
-                        // Exemplo genérico (precisa ser adaptado se as opções corretas não forem sempre a primeira com "true")
-                        if (button.parentElement.querySelector('button[onclick*="checkQuizAnswer(this, true)"]') === opt) {
-                           if (!isCorrect) { // Só destacar se a errada foi clicada
-                                opt.classList.remove('bg-slate-50', 'text-slate-500');
-                                opt.classList.add('bg-green-200', 'text-green-800', 'border-2', 'border-green-500');
-                           }
-                        }
-                    });
-                }
+
+        // Event Listeners para os botões
+        prevButton.addEventListener('click', () => {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
             }
-            
-            // Atualiza o ano no rodapé
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-            // Animações de Scroll com Intersection Observer
-            const animatedElements = document.querySelectorAll('.js-scroll-animate');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                        entry.target.classList.remove('opacity-0', 'translate-y-5');
-                        observer.unobserve(entry.target); // Anima apenas uma vez
-                    }
-                });
-            }, { threshold: 0.1 }); // Dispara quando 10% do elemento está visível
-
-            animatedElements.forEach(el => {
-                el.classList.add('opacity-0', 'translate-y-5', 'transition-all', 'duration-700', 'ease-out');
-                observer.observe(el);
-            });
-
-            // Lógica para Modais
-            const modalTriggers = document.querySelectorAll('.modal-trigger');
-            const modals = document.querySelectorAll('.modal'); // Seleciona todos os modais pela classe .modal
-            const modalCloseButtons = document.querySelectorAll('.modal-close');
-
-            modalTriggers.forEach(trigger => {
-                trigger.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const modalId = trigger.dataset.modalTarget;
-                    const modalToOpen = document.getElementById(modalId);
-                    if (modalToOpen) {
-                        modalToOpen.classList.remove('hidden');
-                        body.classList.add('overflow-hidden'); // Impede scroll do fundo
-                    }
-                });
-            });
-
-            modalCloseButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const modalToClose = button.closest('.modal');
-                    if (modalToClose) {
-                        modalToClose.classList.add('hidden');
-                        body.classList.remove('overflow-hidden');
-                    }
-                });
-            });
-
-            // Fechar modal clicando no overlay
-            modals.forEach(modal => {
-                modal.addEventListener('click', (event) => {
-                    // Verifica se o clique foi no próprio modal (overlay) e não em seus filhos (modal-content)
-                    if (event.target === modal) { 
-                        modal.classList.add('hidden');
-                        body.classList.remove('overflow-hidden');
-                    }
-                });
-            });
         });
-    </script>
 
+        nextButton.addEventListener('click', () => {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        });
+        
+        // Lógica do Modal de Boas-Vindas
+        closeModalButton.addEventListener('click', () => {
+            welcomeModal.style.display = 'none';
+            presentationContainer.classList.remove('opacity-0');
+            presentationContainer.classList.add('opacity-100');
+            showSlide(currentSlideIndex); // Mostra o primeiro slide após fechar o modal
+        });
+
+        // Mostrar o modal quando a página carregar
+        window.addEventListener('DOMContentLoaded', () => {
+            welcomeModal.style.display = 'block';
+            // Não mostrar o primeiro slide até o modal ser fechado
+        });
+
+    </script>
 </body>
 </html>
